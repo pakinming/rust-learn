@@ -10,11 +10,11 @@
 //
 // Make the code compile and the tests pass.
 
-// I AM NOT DONE
+
 
 use std::collections::HashMap;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum Progress {
     None,
     Some,
@@ -34,7 +34,14 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    1
+    let mut count = 0;
+    // ref: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.for_each
+    
+    map.values().for_each(|v| if v == &value {count +=1;});
+
+    // println!("##### map.iter() {:#?}", map.iter());
+
+    count
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -53,7 +60,14 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    let mut count = 0;
+    collection.iter().for_each(|map| 
+
+        map.values().for_each(
+            |val| if val == &value { count += 1;}) );
+        
+    count
+
 }
 
 #[cfg(test)]
